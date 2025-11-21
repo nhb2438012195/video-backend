@@ -7,7 +7,7 @@ import java.io.IOException;
 public interface CommonService {
      String checkUserName();
 
-     String getUserName();
+     String getUserId();
 
      void deleteFolder(String parentDir, String folderName) throws IOException;
      void saveMultipartFile(MultipartFile file, String uploadDir, String fileName) throws IOException;

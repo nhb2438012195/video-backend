@@ -1,7 +1,6 @@
 package com.nhb.service.impl;
 
 import com.nhb.service.CommonService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -25,8 +24,9 @@ public class CommonServiceImpl implements CommonService {
         return username;
     }
 
+
     @Override
-    public String getUserName() {
+    public String getUserId() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
     /**

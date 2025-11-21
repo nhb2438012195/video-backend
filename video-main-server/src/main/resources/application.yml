@@ -20,6 +20,11 @@ video :
   #转码队列
   transcodeRoutingKey: video.transcode
   transcodeQueue: video.transcode.queue
+  #消息保存队列
+message:
+  messageSaveQueue: video.message.save.queue
+  messageSaveRoutingKey: video.message.save
+  Exchange: video.exchange
 #项目配置
 
 
@@ -58,6 +63,8 @@ mybatis:
 #拦截器配置
 security:
   permit-urls:
+    - "/ws"
+    - "/ws/**"
     - "/favicon.ico"
     - "/user/register"
     - "/user/login"
@@ -72,6 +79,7 @@ security:
     - "/comment/get"
     - "/comment/reply/get-more"
     - "/comment/get-up-like"
+    - "/video/**"
     - "/video/user-works-count"
     - "/video/user-works"
     - "/video/user-love"

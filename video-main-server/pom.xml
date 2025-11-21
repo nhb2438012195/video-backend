@@ -22,7 +22,11 @@
             <artifactId>video-video-server</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.nhb</groupId>
+            <artifactId>video-message-server</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

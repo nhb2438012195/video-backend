@@ -21,7 +21,7 @@ public class User {
         @TableId(value = "user_id", type = IdType.AUTO) // 主键，自增
         private Long userId;
 
-        @TableField(value = "username", condition = SqlCondition.EQUAL)
+        @TableField(value = "username")
         private String username; // 用户名
 
         @TableField("name")

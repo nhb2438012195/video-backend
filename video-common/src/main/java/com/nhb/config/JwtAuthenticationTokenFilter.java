@@ -40,7 +40,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             "/category/getall",
             "/video/random/visitor",
             "/druid/**",
-            "/favicon.ico"
+            "/favicon.ico",
+            "/ws/**",
+            "/ws"
     };
     private boolean isPermitAll(String uri) {
         for (String path : PERMIT_ALL_PATHS) {
@@ -75,12 +77,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 if (StringUtils.hasText(token) && Objects.nonNull(claims)) {
                     String username = claims.get("username").toString();
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (Exception e) {
-                log.error("JWT 认证失败: {}", e.getMessage());
+                log.error("JWT 认证失败如果该路径不需要登录则不会影响后续: {}", e.getMessage());
             }
             chain.doFilter(request, response);
         }

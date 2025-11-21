@@ -16,7 +16,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,19 +47,21 @@ public class VideoTranscodeMessageConsumer {
 
         try {
             System.out.println("接收到视频转码消息：" + message.getVideoName()+"uploadKey:"+message.getUploadKey());
+            Video videoObject = createVideo(message.getVideoName().replace(".mp4", ""));
             //合并分片
             log.info("开始合并分片：{}", message.getUploadKey());
             ChunkUploadContext chunkUploadContext = redisHashObjectUtils.getObject(message.getUploadKey(), ChunkUploadContext.class);
             s3Util.completeMultipartUpload(chunkUploadContext.getUploadId(), chunkUploadContext.getPartETags(), chunkUploadContext.getObjectName());
             log.info("合并分片完成：{}", message.getUploadKey());
             log.info("开始转码：{}", message.getVideoName());
-            //Video videoObject = createVideo();
             minIOUtil.downloadFileToLocal(message.getVideoName(), videoProperties.getVideoTemporaryFile()+message.getVideoName());
             Path input = Paths.get( videoProperties.getVideoTemporaryFile()+message.getVideoName());
             Path output = Paths.get(videoProperties.getVideoTemporaryFile()+message.getVideoName().replace(".mp4", "")+"/");
             // 执行转换（4秒分片）
             ffmpegUtils.convertMp4ToDash(input, output, 4);
             minIOUtil.uploadDirectory(videoProperties.getDashFileSaveBucket(), output.toString());
+            videoObject.setIsReady(1);
+            videoDAO.updateVideoIdById(videoObject);
         } catch (Exception e) {
             log.error("视频转码失败：{}", message.getVideoName(), e);
         }finally {
@@ -73,12 +74,12 @@ public class VideoTranscodeMessageConsumer {
         }
     }
 
-    public Video createVideo() {
+    public Video createVideo(String videoMpdUrl) {
         VideoDetails videoDetails = videoDetailsDAO.addVideoDetails(new VideoDetails());
         Video video = videoDAO.addVideo(Video.builder()
                 .videoId(null)
                 .detailsId(videoDetails.getVideoDetailsId())
-                .videoMpdUrl(null)
+                .videoMpdUrl(videoMpdUrl)
                 .isReady(0)
                 .build()
         );
@@ -87,7 +88,7 @@ public class VideoTranscodeMessageConsumer {
         }
         // 更新视频详情表中的视频ID
         videoDetails.setVideoId(video.getVideoId());
-        videoDetailsDAO.updateVideoIdById(videoDetails);
+        videoDetailsDAO.updateVideoDetailsIdById(videoDetails);
         return video;
     }
 }

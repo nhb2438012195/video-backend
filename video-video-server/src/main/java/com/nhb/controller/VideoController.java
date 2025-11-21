@@ -7,9 +7,8 @@ import com.nhb.properties.VideoProperties;
 import com.nhb.result.Result;
 import com.nhb.service.CommonService;
 
-import com.nhb.service.UserService;
+import com.nhb.api.UserServiceApi;
 import com.nhb.service.VideoService;
-import com.nhb.context.ChunkUploadContext;
 import com.nhb.util.RabbitMQUtil;
 import com.nhb.util.RedisHashObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,8 +39,6 @@ public class VideoController {
 
     @Autowired
     private CommonService commonService;
-    @Autowired
-    private UserService userService;
 
 //    @Operation(summary = "上传视频")
 //    @PostMapping("/upload")
@@ -69,11 +66,10 @@ public class VideoController {
     @Operation(summary = "初始化分片上传视频")
     @PostMapping("/initChunkUpload")
     public Result initChunkUpload(@RequestBody InitChunkUploadDTO initChunkUploadDTO) {
-        userService.hello();
         //校验用户名
         log.info("开始初始化分片上传");
-        String username = commonService.getUserName();
-        InitChunkUploadVO initChunkUploadVO = videoService.initChunkUpload(initChunkUploadDTO, username);
+        String userId = commonService.getUserId();
+        InitChunkUploadVO initChunkUploadVO = videoService.initChunkUpload(initChunkUploadDTO, userId);
         log.info("初始化分片上传成功:{}", initChunkUploadVO);
         return Result.success(initChunkUploadVO);
     }
@@ -90,7 +86,7 @@ public class VideoController {
                              @RequestParam("uploadKey") String uploadKey,
                              @RequestParam("partNumber") Integer chunkIndex) throws IOException {
         //log.info("开始上传分片视频:{}", chunkIndex);
-        String username = commonService.getUserName();
+        String username = commonService.getUserId();
         //检查是否有权限上传
         if(!videoService.checkChunkUploadPermission(username, uploadKey,chunkIndex)){
             throw new BusinessException("上传分片视频失败:无权限上传");

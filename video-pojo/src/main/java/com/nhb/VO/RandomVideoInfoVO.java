@@ -24,7 +24,7 @@ public class RandomVideoInfoVO {
     private String videoTitle; // 视频标题
 
     @TableField("video_author_id")
-    private String videoAuthor; // 视频作者
+    private Long videoAuthor; // 视频作者
 
     @TableField("video_length")
     private String videoLength; // 视频时长（秒）

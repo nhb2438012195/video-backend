@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfoVO {
+    @TableId(value = "user_id", type = IdType.AUTO)
+    private Long userId;
 
     @TableField(value = "username", condition = SqlCondition.EQUAL)
     private String username; // 用户名

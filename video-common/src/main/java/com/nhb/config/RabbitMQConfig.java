@@ -30,6 +30,11 @@ public class RabbitMQConfig {
     public  String VIDEO_UPLOAD_QUEUE ;
     @Value("${video.uploadRoutingKey}")
     public  String VIDEO_UPLOAD_ROUTING_KEY ;
+    //消息保存队列
+    @Value("${message.messageSaveQueue}")
+    public  String MESSAGE_SAVE_QUEUE ;
+    @Value("${message.messageSaveRoutingKey}")
+    public  String MESSAGE_SAVE_ROUTING_KEY ;
     @Bean
     public DirectExchange videoProcessExchange() {
         return new DirectExchange(VIDEO_PROCESS_EXCHANGE);
@@ -57,6 +62,18 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(videoUploadQueue())
                 .to(videoProcessExchange())
                 .with(VIDEO_UPLOAD_ROUTING_KEY);
+    }
+    // 聊天消息保存队列
+    @Bean
+    public Queue messageSaveQueue() {
+        return new Queue(MESSAGE_SAVE_QUEUE, true); // durable=true
+    }
+
+    @Bean
+    public Binding bindingMessageSaveQueue() {
+        return BindingBuilder.bind(videoUploadQueue())
+                .to(videoProcessExchange())
+                .with(MESSAGE_SAVE_ROUTING_KEY);
     }
     // ====== 配置 JSON 消息转换器 ======
     @Bean

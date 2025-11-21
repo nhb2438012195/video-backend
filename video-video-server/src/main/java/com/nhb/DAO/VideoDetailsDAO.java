@@ -24,7 +24,7 @@ public class VideoDetailsDAO extends ServiceImpl<VideoDetailsMapper, VideoDetail
         }
     }
 
-    public void updateVideoIdById(VideoDetails videoDetails) {
+    public void updateVideoDetailsIdById(VideoDetails videoDetails) {
         updateById(videoDetails);
     }
 }

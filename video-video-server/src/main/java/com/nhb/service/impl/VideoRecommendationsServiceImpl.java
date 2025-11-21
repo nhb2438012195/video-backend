@@ -1,7 +1,7 @@
 package com.nhb.service.impl;
 
-import com.nhb.DAO.UserDAO;
 import com.nhb.DAO.VideoDetailsDAO;
+import com.nhb.api.UserClient;
 import com.nhb.entity.VideoDetails;
 import com.nhb.VO.RandomVideoInfoVO;
 import com.nhb.service.VideoRecommendationsService;
@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 public class VideoRecommendationsServiceImpl implements VideoRecommendationsService {
     @Autowired
     private VideoDetailsDAO videoDetailsDAO;
-    @Autowired
-    private UserDAO userDAO;
 
     @Override
     public List<RandomVideoInfoVO> getRandomVideoInfo(String num) {
@@ -32,7 +30,7 @@ public class VideoRecommendationsServiceImpl implements VideoRecommendationsServ
         return videoDetailsList.stream().map(videoDetails -> RandomVideoInfoVO.builder()
                 .videoTitle(videoDetails.getVideoTitle())
                 .videoAuthor(
-                        userDAO.getUserById(videoDetails.getVideoAuthorId()).getName())
+                        videoDetails.getVideoAuthorId())
                 .videoLength(videoDetails.getVideoLength())
                 .videoPlayVolume(videoDetails.getVideoPlayVolume())
                 .videoBarrageVolume(videoDetails.getVideoBarrageVolume())

@@ -19,6 +19,7 @@
         <module>video-main-server</module>
         <module>video-common</module>
         <module>video-video-server</module>
+        <module>video-message-server</module>
     </modules>
     <properties>
         <java.version>8</java.version>
