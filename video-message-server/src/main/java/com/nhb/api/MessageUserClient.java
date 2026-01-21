@@ -1,7 +1,5 @@
 package com.nhb.api;
 
-import com.nhb.DTO.UserFollowDTO;
-import com.nhb.DTO.UserFollowPageDTO;
 import com.nhb.DTO.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserClient {
+public class MessageUserClient {
     @Autowired
     private UserServiceApi userService;
 

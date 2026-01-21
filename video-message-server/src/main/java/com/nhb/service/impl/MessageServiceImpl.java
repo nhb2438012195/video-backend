@@ -20,8 +20,8 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageVO> getMessageVOList(MessagePageDTO messagePageDTO) {
        return messageDAO.getMessagePageByConversationId(messagePageDTO.getConversationId(), messagePageDTO.getPage(), messagePageDTO.getPageSize())
                 .stream().map(message -> MessageVO.builder()
-                        .messageId(message.getMessageId())
-                        .toUserId(messagePageDTO.getRecipientUserId())
+                        .messageId(String.valueOf(message.getMessageId()))
+                        .toUserId(String.valueOf(messagePageDTO.getRecipientUserId()))
                         .content(message.getContent())
                         .messageSendTime(message.getMessageSendTime())
                         .messageType(message.getMessageType())

@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nhb.DTO.UserFollowDTO;
 import com.nhb.mapper.MessageMapper;
 import com.nhb.pojo.VO.MessageVO;
-import com.nhb.pojo.VO.UserChatRecipientVO;
 import com.nhb.pojo.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

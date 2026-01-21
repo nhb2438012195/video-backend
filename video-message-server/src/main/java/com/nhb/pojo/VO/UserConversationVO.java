@@ -1,8 +1,5 @@
 package com.nhb.pojo.VO;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,20 +15,22 @@ import java.util.List;
 @NoArgsConstructor
 public class UserConversationVO {
 
-    private Long conversationId;
+    private String conversationId;
     //聊天对象id
-    private Long recipientUserId;
+    private String recipientUserId;
 
     private String lastMessageContent;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastMessageTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updatedAt;
     //是否未读
-    private Integer isUnread;
+    private Integer unreadCount;
 
     //近10条聊天记录
     private List<MessageVO> messageVOList;
+    //聊天对象信息
+    private ConversationUserInfoVO conversationUserInfoVO;
+
+    private String messageCount;
 }

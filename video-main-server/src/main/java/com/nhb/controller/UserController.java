@@ -1,5 +1,6 @@
 package com.nhb.controller;
 
+import com.nhb.DTO.UserInfoDTO;
 import com.nhb.DTO.UserLoginDTO;
 import com.nhb.DTO.UserRegisterDTO;
 import com.nhb.VO.UserInfoVO;
@@ -10,6 +11,7 @@ import com.nhb.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,9 +65,11 @@ public class UserController {
 
     @Operation(summary = "获取用户信息", description = "获取用户信息接口")
     @GetMapping("/userInfo")
-    public Result getUserInfo() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserInfoVO userInfoVO = userService.getUserInfo(username);
+    public Result<UserInfoVO> getUserInfo() {
+        Long userId = Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
+        UserInfoDTO userInfoDTO = userService.getUserInfoById(userId);
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtils.copyProperties(userInfoDTO, userInfoVO);
         return Result.success(userInfoVO, "获取用户信息成功");
     }
 }

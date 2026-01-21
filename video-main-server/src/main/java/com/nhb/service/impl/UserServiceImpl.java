@@ -3,10 +3,7 @@ package com.nhb.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nhb.BO.JWTclaims;
 import com.nhb.DAO.UserDAO;
-import com.nhb.DTO.UserFollowDTO;
-import com.nhb.DTO.UserFollowPageDTO;
-import com.nhb.DTO.UserLoginDTO;
-import com.nhb.DTO.UserRegisterDTO;
+import com.nhb.DTO.*;
 import com.nhb.api.UserServiceApi;
 import com.nhb.entity.User;
 import com.nhb.VO.UserInfoVO;
@@ -103,25 +100,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
 
-    @Override
-    public List<UserFollowDTO> getUserFollowList(UserFollowPageDTO userFollowPageDTO) {
-        List<UserFollows> userFollowsList = userDAO.getUserFollowsPageByUserId(
-                userFollowPageDTO.getPage(),
-                userFollowPageDTO.getPageSize(),
-                userFollowPageDTO.getUserId()
-                );
 
-        List<UserFollowDTO> userFollowDTOList =userFollowsList.stream().map(userFollows -> {
-            User followUser =userDAO.getUserById(userFollows.getFollowsUserId());
-            return UserFollowDTO.builder()
-                    .userId(userFollows.getUserId())
-                    .followsUserId(userFollows.getUserId())
-                    .followsName(followUser.getName())
-                    .followsAvatar(followUser.getAvatar())
-                    .build();
-        }).collect(Collectors.toList());
-        log.info("获取用户关注列表成功{}", userFollowDTOList.size());
-        return userFollowDTOList;
+
+
+
+    @Override
+    public UserInfoDTO getUserInfoById(Long userId) {
+        User user = userDAO.getUserById(userId);
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        BeanUtils.copyProperties(user, userInfoDTO);
+        return userInfoDTO;
     }
 
 

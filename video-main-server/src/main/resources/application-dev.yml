@@ -3,11 +3,11 @@ server:
 sky:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    host: 120.26.137.2
+    host: localhost
     port: 3306
-    database: videoweb
+    database: chat
     username: root
-    password: nhb2438012195
+    password: admin
 
 minio:
   endpoint: http://120.26.137.2:9000

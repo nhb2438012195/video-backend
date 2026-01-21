@@ -16,13 +16,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageVO {
-    private Long messageId;
+    private String messageId;
 
-    private Long toUserId;
+    private String conversationId;
+
+    private String toUserId;
 
     private String content;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime messageSendTime; // 发送 时间
 
     private String messageType;
+    
 }

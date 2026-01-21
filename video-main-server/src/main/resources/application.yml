@@ -53,6 +53,10 @@ spring:
     username: ${rabbitmq.username}
     password: ${rabbitmq.password}
     virtual-host: /
+    messaging:
+      stomp:
+        # 允许客户端发送的自定义头（正则匹配）
+        allowed-origin-patterns: "*"
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
@@ -64,34 +68,9 @@ mybatis:
 security:
   permit-urls:
     - "/ws"
-    - "/ws/**"
-    - "/favicon.ico"
     - "/user/register"
     - "/user/login"
-    - "/admin/account/login"
-    - "/user/info/get-one"
-    - "/category/getall"
-    - "/ws/danmu/**"
-    - "/danmu-list/**"
-    - "/msg/chat/outline"
-    - "/favorite/get-all/visitor"
-    - "/search/**"
-    - "/comment/get"
-    - "/comment/reply/get-more"
-    - "/comment/get-up-like"
     - "/video/**"
-    - "/video/user-works-count"
-    - "/video/user-works"
-    - "/video/user-love"
-    - "/video/user-collect"
-    - "/video/random/visitor"
-    - "/video/cumulative/visitor"
-    - "/video/getone"
-    - "/video/play/visitor"
-    - "/doc.html"
-    - "/swagger-ui/**"
-    - "/v3/api-docs/**"
-    - "/webjars/**"
 #日志配置
 logging:
   level:
@@ -100,6 +79,9 @@ logging:
         mapper: debug
         service: info
         controller: info
+    org.springframework.web.socket: DEBUG
+    org.springframework.messaging.simp: DEBUG
+    org.springframework.web.socket.sockjs: DEBUG
 jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: nhb2438012195

@@ -42,6 +42,8 @@ public class Conversation {
     @TableField("unread_count_for_user2")
     private Integer unreadCountForUser2;
 
+    @TableField("message_count")
+    private Long messageCount;
     // ==================== 构造方法与工具方法 ====================
 
     /**

@@ -27,7 +27,16 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public String getUserId() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        String userId= null;
+        try {
+            userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            if(userId==null){
+                throw new RuntimeException("非http请求无法获取用户id");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("非http请求无法获取用户id");
+        }
+        return userId;
     }
     /**
      * 删除指定目录下的指定文件夹（包括文件夹本身及其所有内容）

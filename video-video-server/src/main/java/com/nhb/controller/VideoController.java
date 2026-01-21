@@ -40,29 +40,6 @@ public class VideoController {
     @Autowired
     private CommonService commonService;
 
-//    @Operation(summary = "上传视频")
-//    @PostMapping("/upload")
-//    public Result upload(@RequestParam("video") MultipartFile video) throws Exception {
-//        log.info("开始上传视频");
-//        if (video.isEmpty()) {
-//            throw new BusinessException("上传视频失败:上传文件不能为空");
-//        }
-//            // 上传视频
-//        String    name = videoService.upload(video);
-//            // 创建视频对象
-//        Video    videoObject = videoService.createVideo();
-//        VideoTranscodeCommand videoTranscodeCommand = VideoTranscodeCommand.builder()
-//                .videoName(name)
-//                .bucket(videoProperties.getBucket())
-//                .build();
-//        log.info("发送视频转码消息:{}", videoTranscodeCommand);
-//        rabbitMQUtil.sendJsonMessage(
-//                videoProperties.getExchange(),  // 1. 发送到哪个 Exchange
-//                videoProperties.getRoutingKey(),           // 2. 使用什么 Routing Key
-//                videoTranscodeCommand                        // 3. 要发送的消息对象
-//        );
-//        return Result.success("上传成功"+ name);
-//    }
     @Operation(summary = "初始化分片上传视频")
     @PostMapping("/initChunkUpload")
     public Result initChunkUpload(@RequestBody InitChunkUploadDTO initChunkUploadDTO) {
@@ -103,21 +80,6 @@ public class VideoController {
         log.info("发送分片上传消息");
         videoService.commandChunksUploadService(fileName, uploadKey, chunkIndex,username);
 
-//        //获取上传会话
-//        ChunkUploadContext chunkUploadContext = videoService.getChunkUploadSession(uploadKey,chunkIndex, username);
-//        log.info("获取上传会话成功:{}", chunkUploadContext);
-//        //上传分片视频
-//        videoService.uploadChunk(file, chunkIndex, chunkUploadContext);
-//        log.info("上传分片成功");
-//        //保存上传会话
-//        videoService.saveUploadSession(uploadKey, chunkUploadContext);
-//        if(chunkUploadContext.getUploadedChunkCount().equals(chunkUploadContext.getTotalChunks())){
-//            log.info("所有分片上传成功,进行分片合并");
-//            //合并分片
-//            videoService.mergeChunks(chunkUploadContext,uploadKey);
-//            log.info("分片合并成功");
-//            return Result.success("已完成上传，分片合并成功");
-//        }
         return Result.success("上传分片成功");
     }
 }

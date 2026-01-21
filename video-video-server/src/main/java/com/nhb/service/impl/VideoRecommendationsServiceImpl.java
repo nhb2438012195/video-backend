@@ -1,7 +1,6 @@
 package com.nhb.service.impl;
 
 import com.nhb.DAO.VideoDetailsDAO;
-import com.nhb.api.UserClient;
 import com.nhb.entity.VideoDetails;
 import com.nhb.VO.RandomVideoInfoVO;
 import com.nhb.service.VideoRecommendationsService;

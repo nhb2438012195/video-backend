@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
 @SpringBootApplication
 @EnableTransactionManagement
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableFeignClients  // 启用Feign客户端
 @EnableScheduling // 启用定时任务
 @EnableKnife4j// 启用Knife4j
+@EnableWebSocketMessageBroker
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);

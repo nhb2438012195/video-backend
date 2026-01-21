@@ -21,13 +21,13 @@ import java.time.LocalDateTime;
 @TableName("message") // 指定数据库表名（如果类名和表名一致，可省略）
 public class Message {
 
-        @TableId(value = "id", type = IdType.AUTO) // 主键，自增
+        @TableId(value = "message_id", type = IdType.AUTO) // 主键，自增
         private Long messageId;
 
-        @TableId(value = "conversation_id")
+        @TableField(value = "conversation_id")
         private Long conversationId;
 
-        @TableId(value = "to_user_id")
+        @TableField(value = "to_user_id")
         private Long toUserId;
 
         @TableField("content")
