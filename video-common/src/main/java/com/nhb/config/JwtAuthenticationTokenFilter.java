@@ -83,7 +83,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (Exception e) {
-                log.error("JWT 认证失败如果该路径不需要登录则不会影响后续: {}", e.getMessage());
+               // log.error("JWT 认证失败如果该路径不需要登录则不会影响后续: {}", e.getMessage());
             }
             chain.doFilter(request, response);
         }

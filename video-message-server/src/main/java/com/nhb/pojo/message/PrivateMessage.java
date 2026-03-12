@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PrivateMessage {
+    private String messageId;
     private String conversationId;
     private String toUserId;
     private String content;

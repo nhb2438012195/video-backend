@@ -44,4 +44,6 @@ public class RandomVideoInfoVO {
 
     @TableField("video_cover")
     private String videoCover;//视频封面
+
+    private String videoLink;//视频链接
 }

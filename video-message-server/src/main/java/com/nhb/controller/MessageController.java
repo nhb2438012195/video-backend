@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,8 @@ public class MessageController {
     private ConversationService conversationService;
     @Autowired
     private MessageService messageService;
+
+    HashMap map = new HashMap();
     /**
      *
      * @return 聊天对象列表包括用户关注的用户和与这个用户最近几条聊天信息

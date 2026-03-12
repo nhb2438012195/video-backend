@@ -1,6 +1,6 @@
 package com.nhb.Interceptor;
 
-import com.nhb.controller.WebSocketAuthenticatorService;
+import com.nhb.service.WebSocketAuthenticatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;

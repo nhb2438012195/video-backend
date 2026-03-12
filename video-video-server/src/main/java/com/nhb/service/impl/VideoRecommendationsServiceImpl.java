@@ -1,5 +1,6 @@
 package com.nhb.service.impl;
 
+import com.nhb.DAO.VideoDAO;
 import com.nhb.DAO.VideoDetailsDAO;
 import com.nhb.entity.VideoDetails;
 import com.nhb.VO.RandomVideoInfoVO;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 public class VideoRecommendationsServiceImpl implements VideoRecommendationsService {
     @Autowired
     private VideoDetailsDAO videoDetailsDAO;
+    @Autowired
+    private VideoDAO videoDAO;
 
     @Override
     public List<RandomVideoInfoVO> getRandomVideoInfo(String num) {
@@ -36,6 +39,7 @@ public class VideoRecommendationsServiceImpl implements VideoRecommendationsServ
                 .createTime(videoDetails.getCreateTime())
                 .state(videoDetails.getState())
                 .videoCover(videoDetails.getVideoCover())
+                .videoLink(videoDAO.getVideoById(videoDetails.getVideoId()).getVideoMpdUrl())
                 .build()
         ).collect(Collectors.toList());
     }

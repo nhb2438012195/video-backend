@@ -51,10 +51,14 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Override
     public List<UserConversationVO> getUserConversationVOList(List<Conversation> conversationPage) {
-        return conversationPage.stream().map(conversation -> {
-                    Long recipientUserId = conversation.getUser1Id()
+        return conversationPage
+                .stream()
+                .map(conversation -> {
+                    Long recipientUserId = conversation
+                            .getUser1Id()
                             .equals(Long.valueOf(commonService.getUserId())) ? conversation.getUser2Id() : conversation.getUser1Id();
-                    return UserConversationVO.builder()
+                    return UserConversationVO
+                            .builder()
                             .messageCount(String.valueOf(conversation.getMessageCount()))
                             .conversationId(String.valueOf(conversation.getConversationId()))
                             .recipientUserId(String.valueOf(recipientUserId))
@@ -68,11 +72,14 @@ public class ConversationServiceImpl implements ConversationService {
                                     })
                                     .orElse(null)
                             )
-                            .unreadCount(conversation.getUser1Id()
+                            .unreadCount(conversation
+                                    .getUser1Id()
                                     .equals(Long.valueOf(commonService.getUserId())) ?
                                     conversation.getUnreadCountForUser1() : conversation.getUnreadCountForUser2())
-                            .messageVOList(messageDAO.getMessagePageByConversationId(conversation.getConversationId(), 1, 100)
-                                    .stream().map(message -> MessageVO.builder()
+                            .messageVOList(messageDAO.getAscMessagePageByConversationId(conversation
+                                            .getConversationId(), 1, 100)
+                                            .stream()
+                                            .map(message -> MessageVO.builder()
                                             .conversationId(String.valueOf(message.getConversationId()))
                                             .messageId(String.valueOf(message.getMessageId()))
                                             .toUserId(String.valueOf(message.getToUserId()))

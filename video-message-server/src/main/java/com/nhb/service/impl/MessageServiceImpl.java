@@ -18,7 +18,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageVO> getMessageVOList(MessagePageDTO messagePageDTO) {
-       return messageDAO.getMessagePageByConversationId(messagePageDTO.getConversationId(), messagePageDTO.getPage(), messagePageDTO.getPageSize())
+       return messageDAO.getAscMessagePageByConversationId(messagePageDTO.getConversationId(), messagePageDTO.getPage(), messagePageDTO.getPageSize())
                 .stream().map(message -> MessageVO.builder()
                         .messageId(String.valueOf(message.getMessageId()))
                         .toUserId(String.valueOf(messagePageDTO.getRecipientUserId()))

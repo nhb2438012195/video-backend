@@ -67,6 +67,7 @@ public class ChatController {
     public void handlePrivateMessage(@Payload PrivateMessage msg,
                                      @AuthenticationPrincipal Principal principal) {
         // 发送给目标用户（Spring 会自动路由到其 WebSocket 连接）
+        String askMsgId=msg.getMessageId();
         String fromUserId =principal.getName();
         Message message = Message.builder()
                 .conversationId(Long.valueOf(msg.getConversationId()))
@@ -79,12 +80,17 @@ public class ChatController {
         conversationService.setLastMessage(message,msg.getConversationId());
         MessageVO messageVO = new MessageVO();
         BeanUtil.copyProperties(message,messageVO);
+        messageVO.setMessageId(String.valueOf(message.getMessageId()));
         log.info("发送私聊消息{}",messageVO.getMessageId());
         messagingTemplate.convertAndSendToUser(
             msg.getToUserId(),
             "/queue/private",
                 messageVO
         );
+        // 发送给发送方确认消息
+        messageVO.setMessageType("0");
+        messageVO.setContent(messageVO.getMessageId());
+        messageVO.setMessageId(askMsgId);
         messagingTemplate.convertAndSendToUser(
                 fromUserId,
                 "/queue/private",

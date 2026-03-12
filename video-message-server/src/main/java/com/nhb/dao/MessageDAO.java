@@ -24,11 +24,19 @@ public class MessageDAO extends ServiceImpl<MessageMapper, Message> {
         return build.getMessageId();
     }
 
-    public List<Message> getMessagePageByConversationId(Long conversationId, int i, int i1) {
+    public List<Message> getDescMessagePageByConversationId(Long conversationId, int i, int i1) {
         Page<Message> pageParam = new Page<>(i, i1);
         return new LambdaQueryChainWrapper<>(this.baseMapper)
                 .eq(Message::getConversationId, conversationId)
                 .orderByDesc(Message::getMessageSendTime)
+                .page(pageParam)
+                .getRecords();
+    }
+    public List<Message> getAscMessagePageByConversationId(Long conversationId, int i, int i1) {
+        Page<Message> pageParam = new Page<>(i, i1);
+        return new LambdaQueryChainWrapper<>(this.baseMapper)
+                .eq(Message::getConversationId, conversationId)
+                .orderByAsc(Message::getMessageSendTime)
                 .page(pageParam)
                 .getRecords();
     }

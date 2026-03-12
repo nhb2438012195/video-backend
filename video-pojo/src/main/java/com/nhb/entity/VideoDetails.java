@@ -58,4 +58,6 @@ public class VideoDetails {
         this.createTime=LocalDateTime.now();
         this.state="1";
     }
+
+
 }

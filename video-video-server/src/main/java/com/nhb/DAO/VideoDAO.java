@@ -21,4 +21,8 @@ public class VideoDAO extends ServiceImpl<VideoMapper, Video> {
     public void updateVideoIdById(Video videoObject) {
         updateById(videoObject);
     }
+
+    public  Video getVideoById(Long videoId) {
+        return getById(videoId);
+    }
 }

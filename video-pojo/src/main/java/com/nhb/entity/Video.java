@@ -27,6 +27,5 @@ public class Video {
         @TableField("is_ready")
         private Integer isReady; // 是否就绪
 
-
 }
 
