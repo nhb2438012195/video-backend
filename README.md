@@ -6,15 +6,16 @@
 
 核心职责：
 
-设计并实现用户、视频、评论、点赞、关注等模块的后端接口
+设计并实现用户、视频、消息、评论、后台管理等模块的后端接口
 
 使用 MinIO 对象存储管理视频文件，实现签名 URL 与防盗链
 
 采用 Redis 缓存热点数据，优化接口性能，解决高并发问题
 
+采用Redisson、分布式锁、防止重复上传、防止重复点赞、并发安全
+
 实现 Elasticsearch 全文检索，支持视频标题、简介搜索
 
-完成 Docker 容器化部署与 Nginx 反向代理
 
 实现大文件分片上传、断点续传、MD5 秒传，使用 MinIO 分布式存储
 
@@ -24,9 +25,13 @@
 
 统一封装返回结果与全局异常处理，提升系统健壮性
 
+SpringDoc、OpenAPI、接口文档自动生成、前后端协作
+
+Docker 容器化、Docker Compose 编排、服务一键部署、环境隔离，Nginx 反向代理
+
 技术栈：
 
-SpringBoot、MySQL、Redis、MyBatis-Plus、MinIO、Elasticsearch、Docker、Nginx、JWT
+java、SpringBoot、MySQL、Redis、MyBatis-Plus、MinIO、Elasticsearch、Docker、Nginx、JWT
 
 视频大文件上传：
 
@@ -43,7 +48,7 @@ SpringBoot、MySQL、Redis、MyBatis-Plus、MinIO、Elasticsearch、Docker、Ngi
 生成封面
 异步转码（不阻塞页面）
 
-存储服务
+存储服务：
 
 MinIO / 阿里云 OSS 对象存储
 视频防盗链
