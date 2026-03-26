@@ -15,7 +15,6 @@
     </parent>
 
     <modules>
-        <module>video-pojo</module>
         <module>video-main-server</module>
         <module>video-common</module>
         <module>video-video-server</module>
