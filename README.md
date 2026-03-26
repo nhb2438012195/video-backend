@@ -1,37 +1,36 @@
-项目名称：仿 B 站视频分享平台
+项目名称：视频分享平台（Java 后端）
 
 项目描述：
 
-基于 SpringBoot + Vue3 开发的视频分享平台，负责后端核心功能开发，实现视频上传、转码、存储、互动、搜索、缓存等企业级能力，专注于文件处理、异步任务、缓存优化、数据库设计、高并发接口等后端核心能力，采用前后端分离架构，Docker 容器化部署。
+基于 SpringBoot + Vue3 前后端分离架构开发的视频分享平台，专注后端核心能力，实现视频存储、异步处理、高并发接口、缓存优化、数据库设计等企业级能力，项目采用 Docker Compose 容器化部署。
 
 核心职责：
 
-设计并实现用户、视频、消息、评论、后台管理等模块的后端接口
+负责用户、视频、评论、消息、后台管理等模块接口设计与开发
 
-使用 MinIO 对象存储管理视频文件，实现签名 URL 与防盗链
+基于 MinIO 实现视频文件存储，完成签名 URL 生成与防盗链策略
 
-采用 Redis 缓存热点数据，优化接口性能，解决高并发问题
+实现大文件分片上传、断点续传、MD5 秒传，提升上传稳定性与效率
 
-采用Redisson、分布式锁、防止重复上传、防止重复点赞、并发安全
+使用自定义线程池异步处理视频转码任务，实现耗时业务解耦
 
-实现 Elasticsearch 全文检索，支持视频标题、简介搜索
+采用 Redis 缓存热点数据，优化接口性能，降低数据库压力
 
+使用 Redisson 分布式锁解决重复上传、重复点赞等并发安全问题
 
-实现大文件分片上传、断点续传、MD5 秒传，使用 MinIO 分布式存储
+基于 Elasticsearch 实现视频标题、简介全文检索功能
 
-基于异步线程池处理视频转码等耗时任务，实现系统解耦
+完成 MySQL 表结构设计、事务控制与索引优化，提升查询性能
 
-完成 MySQL 表结构设计、事务控制与索引优化
+封装统一返回体与全局异常处理，提高系统健壮性与可维护性
 
-统一封装返回结果与全局异常处理，提升系统健壮性
+集成 SpringDoc 自动生成 OpenAPI 标准接口文档
 
-SpringDoc、OpenAPI、接口文档自动生成、前后端协作
-
-Docker 容器化、Docker Compose 编排、服务一键部署、环境隔离，Nginx 反向代理
+使用 Docker + Docker Compose + Nginx 完成项目容器化部署
 
 技术栈：
 
-java、SpringBoot、MySQL、Redis、MyBatis-Plus、MinIO、Elasticsearch、Docker、Nginx、JWT
+Java、SpringBoot、MyBatis-Plus、MySQL、Redis、Redisson、MinIO、Elasticsearch、Docker、Docker Compose、Nginx、JWT、SpringDoc
 
 视频大文件上传：
 
