@@ -3,25 +3,25 @@ server:
 sky:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    host: 47.115.227.193
+    host: 182.92.176.70
     port: 3306
     database: video_web
     username: root
     password: nhb2438012195
 
 minio:
-  endpoint: http://47.115.227.193:9000
+  endpoint: http://182.92.176.70:9000
   access-key: root
   secret-key: nhb2438012195
   bucket-name: public
 
 redis:
-  host: 47.115.227.193
+  host: 182.92.176.70
   port: 6379
   password: nhb2438012195
 
 rabbitmq:
-  host: 47.115.227.193
+  host: 182.92.176.70
   port: 5672
   username: root
   password: nhb2438012195
