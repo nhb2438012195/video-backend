@@ -1,15 +1,16 @@
 package com.nhb.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nhb.BO.JWTclaims;
+import com.nhb.model.bo.JWTclaims;
 import com.nhb.DAO.UserDAO;
-import com.nhb.DTO.*;
 import com.nhb.api.UserServiceApi;
-import com.nhb.entity.User;
-import com.nhb.VO.UserInfoVO;
-import com.nhb.entity.UserFollows;
+import com.nhb.model.entity.User;
+import com.nhb.model.vo.UserInfoVO;
 import com.nhb.exception.RegisterFailedException;
 import com.nhb.mapper.UserMapper;
+import com.nhb.model.dto.UserInfoDTO;
+import com.nhb.model.dto.UserLoginDTO;
+import com.nhb.model.dto.UserRegisterDTO;
 import com.nhb.properties.JwtProperties;
 import com.nhb.service.UserService;
 import com.nhb.util.JwtUtil;
@@ -24,9 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -98,11 +97,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         BeanUtils.copyProperties(user, userInfoVO);
         return userInfoVO;
     }
-
-
-
-
-
 
     @Override
     public UserInfoDTO getUserInfoById(Long userId) {

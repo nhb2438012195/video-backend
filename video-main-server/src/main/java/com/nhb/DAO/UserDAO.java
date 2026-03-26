@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nhb.entity.User;
-import com.nhb.entity.UserFollows;
+
 import com.nhb.exception.RegisterFailedException;
 import com.nhb.mapper.UserFollowsMapper;
 import com.nhb.mapper.UserMapper;
+import com.nhb.model.entity.User;
+import com.nhb.model.entity.UserFollows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

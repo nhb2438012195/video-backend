@@ -1,18 +1,14 @@
 package com.nhb.dao;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nhb.DTO.UserFollowDTO;
 import com.nhb.mapper.MessageMapper;
-import com.nhb.pojo.VO.MessageVO;
-import com.nhb.pojo.entity.Message;
+import com.nhb.model.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageDAO extends ServiceImpl<MessageMapper, Message> {

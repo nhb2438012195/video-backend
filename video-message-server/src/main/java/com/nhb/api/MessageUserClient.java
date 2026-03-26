@@ -1,6 +1,7 @@
 package com.nhb.api;
 
-import com.nhb.DTO.UserInfoDTO;
+
+import com.nhb.model.dto.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

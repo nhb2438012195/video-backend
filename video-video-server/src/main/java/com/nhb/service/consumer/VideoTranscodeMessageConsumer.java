@@ -3,10 +3,10 @@ package com.nhb.service.consumer;
 
 import com.nhb.DAO.VideoDAO;
 import com.nhb.DAO.VideoDetailsDAO;
-import com.nhb.command.VideoTranscodeCommand;
-import com.nhb.context.ChunkUploadContext;
-import com.nhb.entity.Video;
-import com.nhb.entity.VideoDetails;
+import com.nhb.model.command.VideoTranscodeCommand;
+import com.nhb.model.context.ChunkUploadContext;
+import com.nhb.model.entity.Video;
+import com.nhb.model.entity.VideoDetails;
 import com.nhb.exception.BusinessException;
 import com.nhb.properties.VideoProperties;
 import com.nhb.service.CommonService;

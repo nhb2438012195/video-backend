@@ -1,6 +1,6 @@
 package com.nhb.service;
 
-import com.nhb.VO.RandomVideoInfoVO;
+import com.nhb.model.vo.RandomVideoInfoVO;
 
 import java.util.List;
 

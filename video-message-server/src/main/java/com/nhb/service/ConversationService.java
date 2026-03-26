@@ -1,13 +1,13 @@
 package com.nhb.service;
 
-import com.nhb.pojo.DTO.CreateConversationDTO;
-import com.nhb.pojo.DTO.ResponseCreateConversationDTO;
-import com.nhb.pojo.DTO.UserGetConversationPageDTO;
-import com.nhb.pojo.VO.ConversationRequestVO;
-import com.nhb.pojo.VO.UserConversationVO;
-import com.nhb.pojo.entity.Conversation;
-import com.nhb.pojo.entity.ConversationRequest;
-import com.nhb.pojo.entity.Message;
+import com.nhb.model.dto.CreateConversationDTO;
+import com.nhb.model.dto.ResponseCreateConversationDTO;
+import com.nhb.model.dto.UserGetConversationPageDTO;
+import com.nhb.model.vo.ConversationRequestVO;
+import com.nhb.model.vo.UserConversationVO;
+import com.nhb.model.entity.Conversation;
+import com.nhb.model.entity.ConversationRequest;
+import com.nhb.model.entity.Message;
 
 import java.util.List;
 

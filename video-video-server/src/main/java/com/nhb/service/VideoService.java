@@ -1,8 +1,8 @@
 package com.nhb.service;
 
-import com.nhb.DTO.InitChunkUploadDTO;
-import com.nhb.VO.InitChunkUploadVO;
-import com.nhb.context.ChunkUploadContext;
+import com.nhb.model.dto.InitChunkUploadDTO;
+import com.nhb.model.vo.InitChunkUploadVO;
+import com.nhb.model.context.ChunkUploadContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

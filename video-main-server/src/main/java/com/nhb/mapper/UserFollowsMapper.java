@@ -1,7 +1,8 @@
 package com.nhb.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.nhb.entity.UserFollows;
+
+import com.nhb.model.entity.UserFollows;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

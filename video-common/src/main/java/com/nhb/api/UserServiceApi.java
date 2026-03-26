@@ -1,10 +1,7 @@
 package com.nhb.api;
 
-import com.nhb.DTO.UserFollowDTO;
-import com.nhb.DTO.UserFollowPageDTO;
-import com.nhb.DTO.UserInfoDTO;
 
-import java.util.List;
+import com.nhb.model.dto.UserInfoDTO;
 
 public interface UserServiceApi {
 

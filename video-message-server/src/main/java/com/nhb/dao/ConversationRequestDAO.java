@@ -1,14 +1,10 @@
 package com.nhb.dao;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nhb.mapper.ConversationMapper;
 import com.nhb.mapper.ConversationRequestMapper;
-import com.nhb.pojo.VO.ConversationRequestVO;
-import com.nhb.pojo.entity.Conversation;
-import com.nhb.pojo.entity.ConversationRequest;
+import com.nhb.model.entity.ConversationRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

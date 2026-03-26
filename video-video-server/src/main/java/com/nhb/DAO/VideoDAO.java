@@ -1,7 +1,7 @@
 package com.nhb.DAO;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nhb.entity.Video;
+import com.nhb.model.entity.Video;
 import com.nhb.mapper.VideoMapper;
 import org.springframework.stereotype.Service;
 

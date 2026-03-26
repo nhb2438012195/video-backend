@@ -1,13 +1,12 @@
 package com.nhb.controller;
 
-import com.nhb.DTO.InitChunkUploadDTO;
-import com.nhb.VO.InitChunkUploadVO;
+import com.nhb.model.dto.InitChunkUploadDTO;
+import com.nhb.model.vo.InitChunkUploadVO;
 import com.nhb.exception.BusinessException;
 import com.nhb.properties.VideoProperties;
 import com.nhb.result.Result;
 import com.nhb.service.CommonService;
 
-import com.nhb.api.UserServiceApi;
 import com.nhb.service.VideoService;
 import com.nhb.util.RabbitMQUtil;
 import com.nhb.util.RedisHashObjectUtils;

@@ -1,10 +1,10 @@
 package com.nhb.controller;
 
-import com.nhb.DTO.UserInfoDTO;
-import com.nhb.DTO.UserLoginDTO;
-import com.nhb.DTO.UserRegisterDTO;
-import com.nhb.VO.UserInfoVO;
-import com.nhb.VO.UserLoginVO;
+import com.nhb.model.dto.UserInfoDTO;
+import com.nhb.model.dto.UserLoginDTO;
+import com.nhb.model.dto.UserRegisterDTO;
+import com.nhb.model.vo.UserInfoVO;
+import com.nhb.model.vo.UserLoginVO;
 import com.nhb.result.Result;
 
 import com.nhb.service.UserService;

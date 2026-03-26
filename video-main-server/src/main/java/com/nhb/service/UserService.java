@@ -1,9 +1,9 @@
 package com.nhb.service;
 
-import com.nhb.DTO.UserInfoDTO;
-import com.nhb.DTO.UserLoginDTO;
-import com.nhb.DTO.UserRegisterDTO;
-import com.nhb.VO.UserInfoVO;
+import com.nhb.model.dto.UserInfoDTO;
+import com.nhb.model.dto.UserLoginDTO;
+import com.nhb.model.dto.UserRegisterDTO;
+import com.nhb.model.vo.UserInfoVO;
 
 public interface UserService {
      void hello();

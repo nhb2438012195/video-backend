@@ -1,7 +1,7 @@
 package com.nhb.service.impl;
 
 
-import com.nhb.entity.User;
+import com.nhb.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

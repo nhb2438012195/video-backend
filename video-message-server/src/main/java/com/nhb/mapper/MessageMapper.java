@@ -1,7 +1,7 @@
 package com.nhb.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.nhb.pojo.entity.Message;
+import com.nhb.model.entity.Message;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

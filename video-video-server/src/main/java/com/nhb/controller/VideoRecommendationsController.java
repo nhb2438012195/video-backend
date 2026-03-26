@@ -1,6 +1,6 @@
 package com.nhb.controller;
 
-import com.nhb.VO.RandomVideoInfoVO;
+import com.nhb.model.vo.RandomVideoInfoVO;
 import com.nhb.result.Result;
 import com.nhb.service.VideoRecommendationsService;
 import io.swagger.v3.oas.annotations.Operation;

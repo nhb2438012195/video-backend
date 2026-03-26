@@ -5,15 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nhb.mapper.ConversationMapper;
 import com.nhb.mapper.ConversationRequestMapper;
-import com.nhb.pojo.entity.Conversation;
-import com.nhb.pojo.entity.ConversationRequest;
-import com.nhb.pojo.entity.Message;
+import com.nhb.model.entity.Conversation;
+import com.nhb.model.entity.ConversationRequest;
+import com.nhb.model.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ConversationDAO extends ServiceImpl<ConversationMapper, Conversation> {

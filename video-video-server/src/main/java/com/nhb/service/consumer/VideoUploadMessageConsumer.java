@@ -1,10 +1,8 @@
 package com.nhb.service.consumer;
 
-import com.nhb.command.ChunksUploadCommand;
-import com.nhb.context.ChunkUploadContext;
-import com.nhb.exception.BusinessException;
+import com.nhb.model.command.ChunksUploadCommand;
+import com.nhb.model.context.ChunkUploadContext;
 import com.nhb.properties.VideoProperties;
-import com.nhb.result.Result;
 import com.nhb.service.CommonService;
 import com.nhb.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 

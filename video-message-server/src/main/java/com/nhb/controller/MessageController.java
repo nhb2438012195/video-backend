@@ -1,15 +1,13 @@
 package com.nhb.controller;
 
 import com.nhb.api.MessageUserClient;
-import com.nhb.pojo.DTO.CreateConversationDTO;
-import com.nhb.pojo.DTO.MessagePageDTO;
-import com.nhb.pojo.DTO.UserGetConversationPageDTO;
-import com.nhb.pojo.VO.ConversationRequestVO;
-import com.nhb.pojo.VO.MessageVO;
-import com.nhb.pojo.VO.UserConversationPageVO;
-import com.nhb.pojo.VO.UserConversationVO;
-import com.nhb.pojo.entity.Conversation;
-import com.nhb.result.PageResult;
+import com.nhb.model.dto.MessagePageDTO;
+import com.nhb.model.dto.UserGetConversationPageDTO;
+import com.nhb.model.vo.ConversationRequestVO;
+import com.nhb.model.vo.MessageVO;
+import com.nhb.model.vo.UserConversationPageVO;
+import com.nhb.model.vo.UserConversationVO;
+import com.nhb.model.entity.Conversation;
 import com.nhb.result.Result;
 import com.nhb.service.CommonService;
 import com.nhb.service.ConversationService;

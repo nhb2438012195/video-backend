@@ -2,8 +2,8 @@ package com.nhb.service.impl;
 
 import com.nhb.DAO.VideoDAO;
 import com.nhb.DAO.VideoDetailsDAO;
-import com.nhb.entity.VideoDetails;
-import com.nhb.VO.RandomVideoInfoVO;
+import com.nhb.model.entity.VideoDetails;
+import com.nhb.model.vo.RandomVideoInfoVO;
 import com.nhb.service.VideoRecommendationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

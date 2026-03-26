@@ -1,7 +1,7 @@
 package com.nhb.service;
 
-import com.nhb.pojo.DTO.MessagePageDTO;
-import com.nhb.pojo.VO.MessageVO;
+import com.nhb.model.dto.MessagePageDTO;
+import com.nhb.model.vo.MessageVO;
 
 import java.util.List;
 

@@ -1,13 +1,12 @@
 package com.nhb.service.impl;
 
 import com.nhb.dao.MessageDAO;
-import com.nhb.pojo.DTO.MessagePageDTO;
-import com.nhb.pojo.VO.MessageVO;
+import com.nhb.model.dto.MessagePageDTO;
+import com.nhb.model.vo.MessageVO;
 import com.nhb.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
