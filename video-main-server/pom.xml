@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.nhb</groupId>
-            <artifactId>video-video-server</artifactId>
+            <artifactId>video-videoPlay-server</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

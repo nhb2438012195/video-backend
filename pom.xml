@@ -17,7 +17,7 @@
     <modules>
         <module>video-main-server</module>
         <module>video-common</module>
-        <module>video-video-server</module>
+        <module>video-videoPlay-server</module>
         <module>video-message-server</module>
     </modules>
     <properties>
