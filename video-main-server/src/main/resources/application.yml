@@ -71,6 +71,10 @@ security:
     - "/user/register"
     - "/user/login"
     - "/video/**"
+    - "/swagger-ui/**"
+    - "/v3/api-docs/**"
+    - "/doc.html"
+    - "/doc.html/**"
 #日志配置
 logging:
   level:

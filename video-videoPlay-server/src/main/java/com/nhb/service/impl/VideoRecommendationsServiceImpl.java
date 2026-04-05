@@ -3,8 +3,9 @@ package com.nhb.service.impl;
 import com.nhb.DAO.VideoPlayDAO;
 import com.nhb.DAO.VideoDetailsDAO;
 import com.nhb.model.entity.VideoDetails;
-import com.nhb.model.vo.RandomVideoInfoVO;
+import com.nhb.model.vo.VideoInfoVO;
 import com.nhb.service.VideoRecommendationsService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class VideoRecommendationsServiceImpl implements VideoRecommendationsServ
     private VideoPlayDAO videoPlayDAO;
 
     @Override
-    public List<RandomVideoInfoVO> getRandomVideoInfo(String num) {
+    public List<VideoInfoVO> getRandomVideoInfo(String num) {
         if(Objects.isNull(num)){
             throw new RuntimeException("num参数不能为空");
         }
@@ -29,18 +30,11 @@ public class VideoRecommendationsServiceImpl implements VideoRecommendationsServ
             throw new RuntimeException("num参数不能大于20");
         }
        List<VideoDetails> videoDetailsList = videoDetailsDAO.getRandomVideoDetails(numInt);
-        return videoDetailsList.stream().map(videoDetails -> RandomVideoInfoVO.builder()
-                .videoTitle(videoDetails.getVideoTitle())
-                .videoAuthor(
-                        videoDetails.getVideoAuthorId())
-                .videoLength(videoDetails.getVideoLength())
-                .videoPlayVolume(videoDetails.getVideoPlayVolume())
-                .videoBarrageVolume(videoDetails.getVideoBarrageVolume())
-                .createTime(videoDetails.getCreateTime())
-                .state(videoDetails.getState())
-                .videoCover(videoDetails.getVideoCover())
-                .videoLink(videoPlayDAO.getVideoById(videoDetails.getVideoPlayId()).getVideoMpdUrl())
-                .build()
+        return videoDetailsList.stream().map(videoDetails -> {
+                VideoInfoVO videoInfoVO =new VideoInfoVO();
+                BeanUtils.copyProperties(videoDetails, videoInfoVO);
+                return videoInfoVO;
+                }
         ).collect(Collectors.toList());
     }
 }

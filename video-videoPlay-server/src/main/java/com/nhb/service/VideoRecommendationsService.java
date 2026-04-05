@@ -1,9 +1,9 @@
 package com.nhb.service;
 
-import com.nhb.model.vo.RandomVideoInfoVO;
+import com.nhb.model.vo.VideoInfoVO;
 
 import java.util.List;
 
 public interface VideoRecommendationsService {
-    List<RandomVideoInfoVO> getRandomVideoInfo(String num);
+    List<VideoInfoVO> getRandomVideoInfo(String num);
 }

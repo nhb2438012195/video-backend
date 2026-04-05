@@ -3,11 +3,13 @@ package com.nhb.model.vo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nhb.model.entity.VideoDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 @Slf4j
@@ -15,14 +17,14 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RandomVideoInfoVO {
+public class VideoInfoVO {
 
 
     @TableField("video_title")
     private String videoTitle; // 视频标题
 
     @TableField("video_author_id")
-    private Long videoAuthor; // 视频作者
+    private Long videoAuthorId; // 视频作者
 
     @TableField("video_length")
     private String videoLength; // 视频时长（秒）
@@ -43,5 +45,10 @@ public class RandomVideoInfoVO {
     @TableField("video_cover")
     private String videoCover;//视频封面
 
-    private String videoLink;//视频链接
+    private Long  videoPlayId;
+
+
+    public VideoInfoVO(VideoDetails videoDetails) {
+        BeanUtils.copyProperties(videoDetails, this);
+    }
 }

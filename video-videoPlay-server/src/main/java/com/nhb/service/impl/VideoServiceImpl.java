@@ -1,14 +1,22 @@
 package com.nhb.service.impl;
 
 import cn.hutool.core.lang.UUID;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nhb.DAO.VideoPlayDAO;
 import com.nhb.DAO.VideoDetailsDAO;
+import com.nhb.mapper.VideoDetailsMapper;
 import com.nhb.model.dto.InitChunkUploadDTO;
+import com.nhb.model.dto.UploadVideoDetailsDTO;
+import com.nhb.model.entity.VideoDetails;
 import com.nhb.model.vo.InitChunkUploadVO;
 import com.nhb.model.command.ChunksUploadCommand;
 import com.nhb.exception.BusinessException;
 import com.nhb.model.command.VideoTranscodeCommand;
+import com.nhb.model.vo.VideoInfoVO;
+import com.nhb.model.vo.VideoPlayInfoVO;
 import com.nhb.properties.VideoProperties;
+import com.nhb.result.PageResult;
 import com.nhb.service.CommonService;
 import com.nhb.service.VideoService;
 import com.nhb.model.context.ChunkUploadContext;
@@ -16,6 +24,7 @@ import com.nhb.util.MinIOUtil;
 import com.nhb.util.RabbitMQUtil;
 import com.nhb.util.RedisHashObjectUtils;
 import com.nhb.util.S3Util;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,18 +54,21 @@ public class VideoServiceImpl implements VideoService {
     private RabbitMQUtil rabbitMQUtil;
     @Autowired
     private CommonService commonService;
-
+    @Autowired
+    private VideoDetailsMapper videoDetailsMapper;
 
 
 
     @Override
     public InitChunkUploadVO initChunkUpload(InitChunkUploadDTO initChunkUploadDTO, String username) {
+        // 参数校验
         if(Objects.isNull(initChunkUploadDTO.getTotalChunks()) ||
                 initChunkUploadDTO.getTotalChunks()<=0 ||
                 initChunkUploadDTO.getTotalChunks()>1000
         ){
             throw new BusinessException("TotalChunks参数错误:不能为null或者小于0大于1000");
         }
+        // 生成上传会话
         String objectName=UUID.randomUUID()+"."+initChunkUploadDTO.getFileType().split("/")[1];
         String uploadKey = "chunkUpload."+username+"."+objectName;
         String uploadId =s3Util.initiateMultipartUpload(objectName);
@@ -80,6 +92,7 @@ public class VideoServiceImpl implements VideoService {
 
     }
 
+    // 检查上传会话权限
     @Override
     public boolean checkChunkUploadPermission(String username, String uploadId, Integer chunkIndex) {
         if(chunkIndex==null || chunkIndex<0){
@@ -91,6 +104,7 @@ public class VideoServiceImpl implements VideoService {
         return redisHashObjectUtils.exists(uploadId);
     }
 
+    // 检查上传文件
     @Override
     public boolean checkChunkUploadFile(MultipartFile file) {
         if(file==null){
@@ -102,6 +116,7 @@ public class VideoServiceImpl implements VideoService {
         return true;
     }
 
+    // 获取上传会话
     @Override
     public ChunkUploadContext getChunkUploadSession(String uploadId, Integer chunkIndex, String username) {
         ChunkUploadContext chunkUploadContext = redisHashObjectUtils.getObject(uploadId, ChunkUploadContext.class);
@@ -168,6 +183,73 @@ public class VideoServiceImpl implements VideoService {
                 videoProperties.getUploadRoutingKey(),           // 2. 使用什么 Routing Key
                 chunksUploadCommand                        // 3. 要发送的消息对象
         );
+    }
+
+    @Override
+    public VideoPlayInfoVO getVideoPlayInfo(Long videoPlayId) {
+        return new VideoPlayInfoVO(videoPlayDAO.getVideoPlayInfoById(videoPlayId));
+    }
+
+    @Override
+    public PageResult<VideoInfoVO> getUserVideoInfoPage(Integer pageNum, Integer pageSize, Long userId) {
+        return new PageResult<> (new LambdaQueryChainWrapper<>(videoDetailsMapper)
+                .eq(VideoDetails::getVideoAuthorId, userId)
+                .orderByDesc(VideoDetails::getCreateTime)
+                .page(new Page<>(pageNum, pageSize))
+                .convert(VideoInfoVO::new));
+    }
+
+    @Override
+    public Integer getUserVideoNum(Long userId) {
+        return  new LambdaQueryChainWrapper<>(videoDetailsMapper)
+                .eq(VideoDetails::getVideoAuthorId, userId)
+                .count();
+    }
+
+    /**
+     * 上传视频信息
+     * @param uploadVideoDetailsDTO  上传视频信息
+     * @param userId 投稿用户id
+     */
+    @Override
+    public void uploadVideoDetails(UploadVideoDetailsDTO uploadVideoDetailsDTO, String userId) {
+        if(userId== null || userId.isEmpty()){
+            throw new BusinessException("投稿视频失败:上传用户id不能为空");
+        }
+        if(!redisHashObjectUtils.exists(uploadVideoDetailsDTO.getUploadKey())){
+            throw new BusinessException("投稿视频失败:投稿视频key不存在");
+        }
+        ChunkUploadContext chunkUploadContext = redisHashObjectUtils.getObject(uploadVideoDetailsDTO.getUploadKey(), ChunkUploadContext.class);
+        if(chunkUploadContext==null){
+            throw new BusinessException("投稿视频失败:投稿视频key不存在");
+        }
+        if(!Objects.equals(chunkUploadContext.getTotalChunks(), chunkUploadContext.getUploadedChunkCount())){
+            throw new BusinessException("投稿视频失败:投稿视频未完成上传");
+        }
+        if(chunkUploadContext.getVideoDetailsId()==null){
+            throw new BusinessException("投稿视频失败:视频投稿上下文中缺少视频详情id");
+        }
+        //开始修改视频信息
+        VideoDetails videoDetails =new LambdaQueryChainWrapper<>( videoDetailsMapper)
+                .eq(VideoDetails::getVideoDetailsId, chunkUploadContext.getVideoDetailsId())
+                .eq(VideoDetails::getVideoAuthorId, userId)
+                .one();
+        if(videoDetails==null){
+            throw new BusinessException("投稿视频失败:视频投稿上下文中VideoDetailsId对应的视频详情不存在，或者用户id错误");
+        }
+        BeanUtils.copyProperties(uploadVideoDetailsDTO, videoDetails);
+        //修改视频状态为正常,代表投稿成功，视频可以被播放
+        videoDetails.setState("1");
+
+        videoDetailsMapper.updateById(videoDetails);
+    }
+
+    @Override
+    public VideoInfoVO getVideoDetailsByVideoPlayId(Long videoPlayId) {
+        return new LambdaQueryChainWrapper<>(videoDetailsMapper)
+                .eq(VideoDetails::getVideoPlayId, videoPlayId)
+                .one()
+                .convert(VideoInfoVO::new);
     }
 
 

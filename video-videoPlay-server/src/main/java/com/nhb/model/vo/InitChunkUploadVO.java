@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InitChunkUploadVO {
+    // 上传的key
     private String uploadKey;
 }

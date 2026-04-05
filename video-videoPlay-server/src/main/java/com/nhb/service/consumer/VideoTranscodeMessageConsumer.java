@@ -46,22 +46,31 @@ public class VideoTranscodeMessageConsumer {
     public void transcode(VideoTranscodeCommand message)  {
 
         try {
-            System.out.println("接收到视频转码消息：" + message.getVideoName()+"uploadKey:"+message.getUploadKey());
-            VideoPlay videoObject = createVideo(message.getVideoName().replace(".mp4", ""));
+            log.info("开始处理视频转码消息：{}", message.getVideoName());
             //合并分片
             log.info("开始合并分片：{}", message.getUploadKey());
+            //获取上传会话信息
             ChunkUploadContext chunkUploadContext = redisHashObjectUtils.getObject(message.getUploadKey(), ChunkUploadContext.class);
+            // 合并分片
             s3Util.completeMultipartUpload(chunkUploadContext.getUploadId(), chunkUploadContext.getPartETags(), chunkUploadContext.getObjectName());
+
             log.info("合并分片完成：{}", message.getUploadKey());
             log.info("开始转码：{}", message.getVideoName());
+            //下载视频到本地
             minIOUtil.downloadFileToLocal(message.getVideoName(), videoProperties.getVideoTemporaryFile()+message.getVideoName());
+            //转码
             Path input = Paths.get( videoProperties.getVideoTemporaryFile()+message.getVideoName());
             Path output = Paths.get(videoProperties.getVideoTemporaryFile()+message.getVideoName().replace(".mp4", "")+"/");
             // 执行转换（4秒分片）
             ffmpegUtils.convertMp4ToDash(input, output, 4);
             minIOUtil.uploadDirectory(videoProperties.getDashFileSaveBucket(), output.toString());
+            VideoPlay videoObject = createVideo(message.getVideoName().replace(".mp4", ""));
+            // 更新视频详情表中的视频ID
+            redisHashObjectUtils.putField(message.getUploadKey(), "videoDetailsId", videoObject.getVideoDetailsId());
+            //TODO：需要等审核后再修改为已就绪
             videoObject.setIsReady(1);
             videoPlayDAO.updateVideoIdById(videoObject);
+            log.info("转码完成：{}", message.getVideoName());
         } catch (Exception e) {
             log.error("视频转码失败：{}", message.getVideoName(), e);
         }finally {
@@ -78,9 +87,8 @@ public class VideoTranscodeMessageConsumer {
         VideoDetails videoDetails = videoDetailsDAO.addVideoDetails(new VideoDetails());
         VideoPlay video = videoPlayDAO.addVideo(VideoPlay.builder()
                 .videoPlayId(null)
-                .detailsId(videoDetails.getVideoDetailsId())
+                .videoDetailsId(videoDetails.getVideoDetailsId())
                 .videoMpdUrl(videoMpdUrl)
-                .isReady(0)
                 .build()
         );
         if(video.getVideoPlayId()==null){
@@ -88,6 +96,7 @@ public class VideoTranscodeMessageConsumer {
         }
         // 更新视频详情表中的视频ID
         videoDetails.setVideoPlayId(video.getVideoPlayId());
+
         videoDetailsDAO.updateVideoDetailsIdById(videoDetails);
         return video;
     }

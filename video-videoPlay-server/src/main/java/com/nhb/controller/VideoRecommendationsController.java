@@ -1,6 +1,6 @@
 package com.nhb.controller;
 
-import com.nhb.model.vo.RandomVideoInfoVO;
+import com.nhb.model.vo.VideoInfoVO;
 import com.nhb.result.Result;
 import com.nhb.service.VideoRecommendationsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +23,7 @@ public class VideoRecommendationsController {
     @Operation(summary = "获取随机视频信息")
     @GetMapping("/recommendedVideoInfo")
     public Result getRandomVideoInfo(@RequestParam String num) {
-        List<RandomVideoInfoVO> videoInfoVOList = videoRecommendationsService.getRandomVideoInfo(num);
+        List<VideoInfoVO> videoInfoVOList = videoRecommendationsService.getRandomVideoInfo(num);
         return Result.success(videoInfoVOList);
     }
 

@@ -43,6 +43,9 @@ public class RedisHashObjectUtils {
 
     /**
      * 将对象以 Hash 形式存入 Redis（永不过期）
+     *
+     * @param key   Redis key
+     *
      */
     public void setObject(String key, Object obj) {
         if (key == null || obj == null) {

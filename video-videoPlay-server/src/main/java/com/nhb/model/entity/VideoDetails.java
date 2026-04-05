@@ -2,12 +2,15 @@ package com.nhb.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nhb.model.vo.VideoInfoVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.time.LocalDateTime;
+import java.util.function.Function;
 
 /**
  * 视频实体类
@@ -54,10 +57,16 @@ public class VideoDetails {
     @TableField("video_cover")
     private String videoCover;//视频封面
 
+    @TableField("likes_num")
+    private Integer likesNum;
+
     public VideoDetails(){
         this.createTime=LocalDateTime.now();
-        this.state="1";
+        this.state="0";
     }
 
-
+    // 转换方法
+    public <VO> VO convert(Function<VideoDetails, VO> function) {
+        return function.apply(this);
+    }
 }

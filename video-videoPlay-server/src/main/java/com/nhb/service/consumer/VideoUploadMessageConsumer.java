@@ -37,9 +37,8 @@ public class VideoUploadMessageConsumer {
             //保存上传会话
             videoService.saveUploadSession(message.getUploadKey(), chunkUploadContext);
             if(chunkUploadContext.getUploadedChunkCount().equals(chunkUploadContext.getTotalChunks())){
-                log.info("所有分片上传成功,进行分片合并");
-                //合并分片
-                videoService.mergeChunks(chunkUploadContext,message.getUploadKey());
+                log.info("所有分片上传成功");
+                //videoService.mergeChunks(chunkUploadContext,message.getUploadKey());
                 log.info("分片合并成功");
             }
         } catch (Exception e) {

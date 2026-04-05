@@ -22,8 +22,10 @@ public class VideoPlayDAO extends ServiceImpl<VideoPlayMapper, VideoPlay> {
         updateById(videoObject);
     }
 
-    public  VideoPlay getVideoById(Long videoId) {
-        return getById(videoId);
+
+    public VideoPlay getVideoPlayInfoById(Long videoPlayId) {
+        return getById(videoPlayId);
     }
+
 
 }

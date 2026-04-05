@@ -7,6 +7,7 @@ import io.minio.messages.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  * 全局异常处理器，处理项目中抛出的业务异常
@@ -23,16 +25,26 @@ import java.time.format.DateTimeFormatter;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    @ExceptionHandler(RegisterFailedException.class)
-    public Result handleRegisterFailedException(RegisterFailedException e) {
-        log.error("注册失败：{}", e.getMessage());
-        return Result.error(e.getMessage());
-    }
+    //业务异常
     @ExceptionHandler(BusinessException.class)
     public Result<Error> handleBusiness(BusinessException e) {
         log.error("业务异常：{}", e.getMessage());
         return Result.error(e.getMessage());
     }
+
+    //参数验证失败
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result handleValid(MethodArgumentNotValidException e) {
+        String msg = Objects.requireNonNull(e.getFieldError()).getDefaultMessage();
+        log.error("客户端参数验证失败：{}", msg);
+        return Result.error(msg);
+    }
+    @ExceptionHandler(RegisterFailedException.class)
+    public Result handleRegisterFailedException(RegisterFailedException e) {
+        log.error("注册失败：{}", e.getMessage());
+        return Result.error(e.getMessage());
+    }
+
     //非业务异常不要捕获，统一处理
     @ExceptionHandler(Exception.class)
     public Result<String> handleUnexpectedException(Exception e) {

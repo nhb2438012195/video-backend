@@ -18,8 +18,8 @@ public class VideoPlay {
         @TableId(value = "video_play_id", type = IdType.AUTO) // 主键，自增
         private Long videoPlayId;
 
-        @TableField("details_id")
-        private Long detailsId; // 视频详情ID
+        @TableField("video_details_id")
+        private Long videoDetailsId; // 视频详情ID
 
         @TableField("video_mpd_url")
         private String videoMpdUrl;// 视频MPD URL

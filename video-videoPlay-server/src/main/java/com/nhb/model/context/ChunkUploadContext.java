@@ -26,5 +26,7 @@ public class ChunkUploadContext {
     private Integer uploadedChunkCount;
     //是否暂停上传
     private boolean isPaused;
+    //视频详情id
+    private Long videoDetailsId=-1L;
 
 }
